@@ -1,0 +1,573 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package USindhFrame;
+
+import USindhBeans.*;
+import USindhDatabaseManager.DatabaseManager;
+import java.util.Vector;
+import javax.swing.JOptionPane;
+
+/**
+ *
+ * @author MUKHTIARALICHANDIO
+ */
+public class Program_Frame extends javax.swing.JFrame {
+
+    /**
+     * Creates new form Program_Frame
+     */
+    public Program_Frame() {
+         initComponents();
+         getFaculty();
+         
+    }
+
+    private void getFaculty(){
+        
+       try{
+            Vector v=DatabaseManager.getFaculty();
+            facultyComboBox.removeAllItems();
+            for(int i=0; i<v.size(); i++)
+            facultyComboBox.addItem(v.elementAt(i));    
+        
+         }catch(Exception e){
+            e.printStackTrace();
+         }
+        
+    }// end of getFaculty method. 
+     
+    private void getDepartment(){
+         
+         FacultyBean bean=(FacultyBean)facultyComboBox.getSelectedItem();
+         if(bean==null)return;
+         try{
+            Vector v=DatabaseManager.getDepartment(bean.getFacId());
+            this.departmentComboBox.removeAllItems();
+            for(int i=0; i<v.size(); i++)
+           this.departmentComboBox.addItem(v.elementAt(i));    
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
+    }// end of getDepartment method.
+     
+    
+     private void getProgram(){
+         
+        DepartmentBean bean=(DepartmentBean)departmentComboBox.getSelectedItem();
+        if(bean==null)return;
+          try{
+            Vector v=DatabaseManager.getProgram(bean.getDeptId());
+            this.ProgramList.setListData(v);  
+         }catch(Exception e){
+            e.printStackTrace();
+        }
+         
+     }// end of getProgram method.
+    
+    private void getProgramTextField(){
+        
+        ProgramBean bean=(ProgramBean)ProgramList.getSelectedValue();
+        if(bean==null)return;
+        this.programIdTextField.setText(""+bean.getProgId());
+        this.programTextField.setText(bean.getProgName());
+        this.durationTextField.setText(bean.getDuration());
+        this.remarksTextArea.setText(bean.getRemarks());
+        
+               
+    }// end of setprogramTextField.
+    
+   private void clear(){
+        
+        
+        this.programIdTextField.setText("");
+        this.programTextField.setText("");
+        this.durationTextField.setText("");
+        this.remarksTextArea.setText("");
+        
+    }// end of clear method.
+    
+   private void addProgram(){
+       
+       DepartmentBean bean=(DepartmentBean)departmentComboBox.getSelectedItem();
+       if(bean==null)return;
+       
+       String program=programTextField.getText();
+       String duration=durationTextField.getText();
+       String remarks=remarksTextArea.getText();
+       try{
+            int rows=DatabaseManager.addProgram(bean.getDeptId(), program,duration,remarks);
+           
+           if(rows>=1){
+                JOptionPane.showMessageDialog(this,rows+"Record Saved");
+                getProgram();
+                clear();
+            }
+       }catch(Exception e){
+           
+       }
+       
+   }// end of addProgram method.
+   
+    private void deleteProgram(){
+    
+      DepartmentBean bean=(DepartmentBean)departmentComboBox.getSelectedItem();
+       if(bean==null)return;
+       
+       String program=programTextField.getText();
+       String duration=durationTextField.getText();
+       String remarks=remarksTextArea.getText();
+       try{
+            int rows=DatabaseManager.addProgram(bean.getDeptId(), program,duration,remarks);
+           
+           if(rows>=1){
+                JOptionPane.showMessageDialog(this,rows+"Record Remove");
+                getProgram();
+                clear();
+            }
+       }catch(Exception e){
+           
+       }
+       
+    }// end of deleteProgram method.
+    
+    private void updateProgram(){
+        
+        
+       ProgramBean bean=(ProgramBean)ProgramList.getSelectedValue();
+         String program=programTextField.getText();
+         String duration=durationTextField.getText();
+         String remarks=remarksTextArea.getText();
+        if(bean==null)return;
+        try{
+            int rows=DatabaseManager.updateProgram(bean.getProgId(),program,duration,remarks); 
+            if(rows>=1){
+            JOptionPane.showMessageDialog(null,rows+" Record Update");
+            getProgram();
+            }
+        }catch(Exception e){
+           e.printStackTrace();
+        }
+        
+        
+    }// end of updateProgram method.
+    
+   
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        ProgramLabel = new javax.swing.JLabel();
+        facultyLabel = new javax.swing.JLabel();
+        facultyComboBox = new javax.swing.JComboBox();
+        DepartmentLabel = new javax.swing.JLabel();
+        departmentComboBox = new javax.swing.JComboBox();
+        programIdLabel = new javax.swing.JLabel();
+        programIdTextField = new javax.swing.JTextField();
+        programLabel = new javax.swing.JLabel();
+        programTextField = new javax.swing.JTextField();
+        DurationLabel = new javax.swing.JLabel();
+        durationTextField = new javax.swing.JTextField();
+        RemarksLabel = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        remarksTextArea = new javax.swing.JTextArea();
+        Program1Label = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        ProgramList = new javax.swing.JList<ProgramBean>();
+        DeleteButton = new javax.swing.JButton();
+        AddButton = new javax.swing.JButton();
+        UpdateButton = new javax.swing.JButton();
+        ClearButton = new javax.swing.JButton();
+        BackButton = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        ProgramLabel.setFont(new java.awt.Font("Arial", 0, 36)); // NOI18N
+        ProgramLabel.setText("  PROGRAM");
+
+        facultyLabel.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        facultyLabel.setText("FACULTY");
+
+        facultyComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                facultyComboBoxActionPerformed(evt);
+            }
+        });
+
+        DepartmentLabel.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        DepartmentLabel.setText("DEPARTMENT");
+
+        departmentComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                departmentComboBoxActionPerformed(evt);
+            }
+        });
+
+        programIdLabel.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        programIdLabel.setText("PROGRAM ID");
+
+        programIdTextField.setEnabled(false);
+
+        programLabel.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        programLabel.setText("PROGRAM");
+
+        DurationLabel.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        DurationLabel.setText("Duration");
+
+        RemarksLabel.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        RemarksLabel.setText("REMARKS");
+
+        remarksTextArea.setColumns(20);
+        remarksTextArea.setRows(5);
+        jScrollPane1.setViewportView(remarksTextArea);
+
+        Program1Label.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        Program1Label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Program1Label.setText("PROGRAMS");
+
+        ProgramList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                ProgramListValueChanged(evt);
+            }
+        });
+        jScrollPane2.setViewportView(ProgramList);
+
+        DeleteButton.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        DeleteButton.setText("DELETE");
+        DeleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteButtonActionPerformed(evt);
+            }
+        });
+
+        AddButton.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        AddButton.setText("ADD");
+        AddButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddButtonActionPerformed(evt);
+            }
+        });
+
+        UpdateButton.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        UpdateButton.setText("UPDATE");
+        UpdateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UpdateButtonActionPerformed(evt);
+            }
+        });
+
+        ClearButton.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        ClearButton.setText("CLEAR");
+        ClearButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ClearButtonActionPerformed(evt);
+            }
+        });
+
+        BackButton.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        BackButton.setText("BACK");
+        BackButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BackButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setIcon(new javax.swing.ImageIcon("C:\\Users\\MUKHTIAR ALI CHANDIO\\Documents\\NetBeansProjects\\usindhAdmissionSystem\\Images For Project\\4.ProgramFrmaeInages\\Bachlor1.jpg")); // NOI18N
+
+        jLabel8.setIcon(new javax.swing.ImageIcon("C:\\Users\\MUKHTIAR ALI CHANDIO\\Documents\\NetBeansProjects\\usindhAdmissionSystem\\Images For Project\\4.ProgramFrmaeInages\\Master1.png")); // NOI18N
+
+        jLabel9.setIcon(new javax.swing.ImageIcon("C:\\Users\\MUKHTIAR ALI CHANDIO\\Documents\\NetBeansProjects\\usindhAdmissionSystem\\Images For Project\\4.ProgramFrmaeInages\\Mphil1.png")); // NOI18N
+
+        jLabel10.setIcon(new javax.swing.ImageIcon("C:\\Users\\MUKHTIAR ALI CHANDIO\\Documents\\NetBeansProjects\\usindhAdmissionSystem\\Images For Project\\4.ProgramFrmaeInages\\Trainging1.png")); // NOI18N
+
+        jLabel11.setIcon(new javax.swing.ImageIcon("C:\\Users\\MUKHTIAR ALI CHANDIO\\Documents\\NetBeansProjects\\usindhAdmissionSystem\\Images For Project\\4.ProgramFrmaeInages\\phd1.png")); // NOI18N
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(facultyLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(DepartmentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(programIdLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(programLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(DurationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(RemarksLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(9, 9, 9)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(240, 240, 240)
+                                .addComponent(ProgramLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(facultyComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(departmentComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(programIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(programTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(durationTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(AddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addComponent(UpdateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addComponent(ClearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(30, 30, 30)
+                                .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(40, 40, 40)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addComponent(Program1Label, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addComponent(DeleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(40, 40, 40)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jLabel6))
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(70, 70, 70)
+                                .addComponent(jLabel5))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(110, 110, 110)
+                                .addComponent(jLabel4)))
+                        .addGap(80, 80, 80)
+                        .addComponent(jLabel8)
+                        .addGap(50, 50, 50)
+                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(73, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(facultyLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)
+                        .addComponent(DepartmentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37)
+                        .addComponent(programIdLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(programLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(DurationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(RemarksLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(ProgramLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(5, 5, 5)
+                        .addComponent(facultyComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(departmentComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(programIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(programTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(durationTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(AddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(UpdateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ClearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(70, 70, 70)
+                        .addComponent(Program1Label, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(DeleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(350, 350, 350)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(290, 290, 290)
+                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(180, 180, 180)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(70, 70, 70)
+                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(49, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void AddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddButtonActionPerformed
+        
+        addProgram();
+        
+    }//GEN-LAST:event_AddButtonActionPerformed
+
+    private void ClearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClearButtonActionPerformed
+        
+        clear();
+        
+    }//GEN-LAST:event_ClearButtonActionPerformed
+
+    private void facultyComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_facultyComboBoxActionPerformed
+        
+        getDepartment();
+        
+    }//GEN-LAST:event_facultyComboBoxActionPerformed
+
+    private void departmentComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_departmentComboBoxActionPerformed
+        getProgram();
+        
+    }//GEN-LAST:event_departmentComboBoxActionPerformed
+
+    private void ProgramListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_ProgramListValueChanged
+        getProgramTextField();
+        
+    }//GEN-LAST:event_ProgramListValueChanged
+
+    private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed
+        
+        deleteProgram();
+        
+    }//GEN-LAST:event_DeleteButtonActionPerformed
+
+    private void UpdateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateButtonActionPerformed
+       updateProgram();
+       
+    }//GEN-LAST:event_UpdateButtonActionPerformed
+
+    private void BackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButtonActionPerformed
+       hide();
+    }//GEN-LAST:event_BackButtonActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Program_Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Program_Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Program_Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Program_Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Program_Frame().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton AddButton;
+    private javax.swing.JButton BackButton;
+    private javax.swing.JButton ClearButton;
+    private javax.swing.JButton DeleteButton;
+    private javax.swing.JLabel DepartmentLabel;
+    private javax.swing.JLabel DurationLabel;
+    private javax.swing.JLabel Program1Label;
+    private javax.swing.JLabel ProgramLabel;
+    private javax.swing.JList<ProgramBean> ProgramList;
+    private javax.swing.JLabel RemarksLabel;
+    private javax.swing.JButton UpdateButton;
+    private javax.swing.JComboBox departmentComboBox;
+    private javax.swing.JTextField durationTextField;
+    private javax.swing.JComboBox facultyComboBox;
+    private javax.swing.JLabel facultyLabel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel programIdLabel;
+    private javax.swing.JTextField programIdTextField;
+    private javax.swing.JLabel programLabel;
+    private javax.swing.JTextField programTextField;
+    private javax.swing.JTextArea remarksTextArea;
+    // End of variables declaration//GEN-END:variables
+}
